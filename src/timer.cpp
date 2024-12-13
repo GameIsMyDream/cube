@@ -23,7 +23,7 @@ Timer::Timer() :
 void Timer::Reset()
 {
     LARGE_INTEGER c;
-    QueryPerformanceFrequency(&c);
+    QueryPerformanceCounter(&c);
 
     _base_time = c.QuadPart;
     _prev_time = c.QuadPart;
@@ -34,7 +34,7 @@ void Timer::Reset()
 void Timer::Start()
 {
     LARGE_INTEGER c;
-    QueryPerformanceFrequency(&c);
+    QueryPerformanceCounter(&c);
     _start_time = c.QuadPart;
 
     if (_stopped)
@@ -51,7 +51,7 @@ void Timer::Stop()
     if (!_stopped)
     {
         LARGE_INTEGER c;
-        QueryPerformanceFrequency(&c);
+        QueryPerformanceCounter(&c);
 
         _stop_time = c.QuadPart;
         _stopped = true;
@@ -67,7 +67,7 @@ void Timer::Tick()
     }
 
     LARGE_INTEGER c;
-    QueryPerformanceFrequency(&c);
+    QueryPerformanceCounter(&c);
 
     _curr_time = c.QuadPart;
     _delta_time = (_curr_time - _prev_time) * _seconds_per_count;
@@ -88,11 +88,11 @@ float Timer::TotalTime() const
 {
     if (_stopped)
     {
-        return static_cast<float>((_stop_time - _paused_time - _base_time) * _seconds_per_count);
+        return static_cast<float>((_stop_time - _base_time - _paused_time) * _seconds_per_count);
     }
     else
     {
-        return static_cast<float>(_curr_time - _paused_time - _base_time * _seconds_per_count);
+        return static_cast<float>((_curr_time - _base_time - _paused_time) * _seconds_per_count);
     }
 }
 

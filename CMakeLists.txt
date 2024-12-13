@@ -4,8 +4,6 @@ project("cube")
 
 set(SRC_FILES
   src/main.cpp
-  src/window.cpp
-  src/window.h
   src/cube.cpp
   src/cube.h
   src/timer.cpp
@@ -19,6 +17,12 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE TRUE)
 
-# target_compile_definitions(${PROJECT_NAME} PRIVATE UNICODE)
+if (WIN32)
+    target_compile_options(${PROJECT_NAME} PRIVATE "/wd4819")
+endif()
 
-target_link_libraries(${PROJECT_NAME} D3D12.lib)
+target_compile_definitions(${PROJECT_NAME} PRIVATE UNICODE PRIVATE _UNICODE)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include/directx)
+
+target_link_libraries(${PROJECT_NAME} D3D12.lib dxgi.lib)

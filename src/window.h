@@ -3,8 +3,6 @@
 #define YYZ_NAMESPACE_BEG namespace yyz {
 #define YYZ_NAMESPACE_END }
 
-#include "d3dimplbase.h"
-
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
@@ -16,7 +14,7 @@ YYZ_NAMESPACE_BEG
 class Window
 {
 public:
-    Window(HINSTANCE instance, const std::string& caption, D3dImplBase& d3d_impl);
+    Window(HINSTANCE instance, const std::wstring& caption);
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
 
@@ -32,13 +30,12 @@ private:
 
 private:
     static Window* window;
-    static constexpr TCHAR CLASS_NAME[] = "Window";
+    static constexpr TCHAR CLASS_NAME[] = L"Window";
 
 private:
     HINSTANCE _instance;
     HWND _window;
-    std::string _caption;
-    D3dImplBase& _d3d_impl;
+    std::wstring _caption;
 };
 
 YYZ_NAMESPACE_END

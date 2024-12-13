@@ -8,11 +8,10 @@ YYZ_NAMESPACE_BEG
 
 Window* Window::window = nullptr;
 
-Window::Window(HINSTANCE instance, const std::string& caption, D3dImplBase& d3d_impl) :
+Window::Window(HINSTANCE instance, const std::wstring& caption) :
     _instance(instance),
     _window(NULL),
-    _caption(caption),
-    _d3d_impl(d3d_impl)
+    _caption(caption)
 {
     assert(!window);
     window = this;
