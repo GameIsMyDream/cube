@@ -576,7 +576,7 @@ void Cube::Draw()
         THROW_D3D_ERROR(ec);
     }
 
-    std::array<ID3D12CommandList*, 1> cmd_lists;
+    std::array<ID3D12CommandList*, 1> cmd_lists = { _command_list.Get() };
     _command_queue->ExecuteCommandLists(static_cast<UINT>(cmd_lists.size()), cmd_lists.data());
 
     ec = _swap_chain->Present(0, 0);
@@ -723,7 +723,7 @@ void Cube::OnResize()
         THROW_D3D_ERROR(ec);
     }
 
-    std::array<ID3D12CommandList*, 1> cmd_lists;
+    std::array<ID3D12CommandList*, 1> cmd_lists = { _command_list.Get() };
     _command_queue->ExecuteCommandLists(static_cast<UINT>(cmd_lists.size()), cmd_lists.data());
 
     FlushCommandQueue();
